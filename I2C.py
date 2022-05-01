@@ -26,5 +26,5 @@ while numb == 1:
 			numb = 0
 	except:
 		pass
-	data=bus.read_byte(addr)
+	data=bus.read_block_data(addr, 0x0)
 	print(data)
