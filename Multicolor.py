@@ -3,13 +3,25 @@
 
 from cv2 import line
 import numpy as np
+import threading
 import cv2
+import queue
+import Archivo
+x_queue = queue.Queue()
+y_queue = queue.Queue()
 linea = []
+
+
+
+def archivo(line):
+    f = open ('holamundo.txt','a')
+    f.write(line)
+    f.close()
 
 
 def main(red_lower, red_upper):
 	# Capturing video through webcam
-	webcam = cv2.VideoCapture(0)
+	webcam = cv2.VideoCapture(1)
 	webcam.set(3,640)
 	webcam.set(4,480)
 
@@ -71,12 +83,11 @@ def main(red_lower, red_upper):
 											cv2.CHAIN_APPROX_SIMPLE)
 
 		try:
-			print(contours)
-			x=0
+			x_mark=0
 		except:
 			pass
 		for pic, contour in enumerate(contours):
-			x=1
+			x_mark=1
 			area = cv2.contourArea(contour)
 			if(area > 300):
 				x, y, w, h = cv2.boundingRect(contour)
@@ -91,10 +102,13 @@ def main(red_lower, red_upper):
 							cv2.FONT_HERSHEY_SIMPLEX, 1.0,
 							(0, 0, 255)) 
 				cv2.putText(imageFrame, "Coordenada: x:{} y:{} ".format(x,y),(30,30),cv2.FONT_HERSHEY_SIMPLEX, 1.0, (0, 0, 255))
+				x_queue.put(x)
+				#y_queue.put(y)
+				threading.Thread(target=Archivo.guardar_linea,args=(x_queue,)).start()
 
 				for i in range(len(linea)-2):	
 					cv2.line(imageFrame, (linea[i][0],linea[i][1]), (linea[i+1][0],linea[i+1][1]), (0, 0, 255), 2)
-			if x>0:
+			if x_mark>0:
 				break
 
 		# Creating contour to track green color
@@ -133,6 +147,9 @@ def main(red_lower, red_upper):
 		# Program Termination
 		cv2.imshow("Proyecto final", imageFrame)
 		if cv2.waitKey(10) & 0xFF == ord('q'):
-			cap.release()
+			webcam.release()
 			cv2.destroyAllWindows()
 			break
+
+#t=threading.Thread(target=Archivo.guardar_linea,args=("hola\n",))
+#t.start()

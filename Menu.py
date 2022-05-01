@@ -1,11 +1,10 @@
 import Multicolor
 import numpy as np
-import threading
 import PySimpleGUI as sg
 
 def call_blue():
-    red_lower = np.array([136, 87, 111], np.uint8)
-    red_upper = np.array([180, 255, 255], np.uint8)
+    red_lower = np.array([157, 43, 196], np.uint8)
+    red_upper = np.array([179, 255, 255], np.uint8)
     Multicolor.main(red_lower,red_upper)
     
 sg.theme('Default')   # Add a touch of color
