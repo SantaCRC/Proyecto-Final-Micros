@@ -26,4 +26,4 @@ while numb == 1:
 			numb = 0
 	except:
 		pass
-	bus.write_byte(addr, int(ledstate)) # switch it off
+	#bus.write_byte(addr, int(ledstate)) # switch it off
