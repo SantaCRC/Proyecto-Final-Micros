@@ -10,6 +10,9 @@ import Archivo
 x_queue = queue.Queue()
 y_queue = queue.Queue()
 linea = []
+from smbus import SMBus
+addr = 0x8 # bus address
+bus = SMBus(1) # indicates /dev/ic2-1
 
 
 
@@ -103,6 +106,7 @@ def main(red_lower, red_upper):
 							(0, 0, 255)) 
 				cv2.putText(imageFrame, "Coordenada: x:{} y:{} ".format(x,y),(30,30),cv2.FONT_HERSHEY_SIMPLEX, 1.0, (0, 0, 255))
 				x_queue.put(x)
+				bus.write_byte(addr,x)
 				#y_queue.put(y)
 				threading.Thread(target=Archivo.guardar_linea,args=(x_queue,)).start()
 
