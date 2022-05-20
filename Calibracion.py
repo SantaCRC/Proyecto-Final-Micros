@@ -47,6 +47,8 @@ def pick_color(event,x,y,flags,param):
         image_mask = cv2.inRange(image_hsv,lower,upper)
         cv2.imshow("Mask",image_mask)
 
+
+
 def main():
 
     global image_hsv, pixel
@@ -66,5 +68,27 @@ def main():
     cv2.waitKey(0)
     cv2.destroyAllWindows()
 
+
+
+def init():
+    cam = cv2.VideoCapture(1)
+    while True:
+        ret, frame = cam.read()
+        if not ret:
+            print("failed to grab frame")
+            break
+        marco=cv2.imshow("Calibracion", frame)
+
+        k = cv2.waitKey(1)
+        if k%256 == 27:
+            # ESC pressed
+            print("Escape hit, closing...")
+            break
+        elif k%256 == 32:
+            # SPACE pressed
+            cam.release()
+            cv2.destroyAllWindows()
+            main()
+
 if __name__=='__main__':
-    main()
+    init()

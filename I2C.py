@@ -1,11 +1,3 @@
-#  Raspberry Pi Master for Arduino Slave
-#  i2c_master_pi.py
-#  Connects to Arduino via I2C
-  
-#  DroneBot Workshop 2019
-#  https://dronebotworkshop.com
- 
-from this import d
 from smbus import SMBus
  
 addr = 0x8 # bus address
