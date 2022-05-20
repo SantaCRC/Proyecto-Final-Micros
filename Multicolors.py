@@ -7,7 +7,6 @@ import threading
 import cv2
 import queue
 
-from yaml import safe_dump
 import Archivo
 x_queue = queue.Queue()
 y_queue = queue.Queue()
