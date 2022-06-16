@@ -1,65 +1,51 @@
 # import the necessary packages
-from picamera.array import PiRGBArray
-from picamera import PiCamera
-import time
-import cv2
+from cv_recon.picam import PiCam
+from cv_recon import Colorspace
+from cv_recon import cv_tools
+from time import sleep
 import numpy as np
- 
-# initialize the camera and grab a reference to the raw camera capture
-camera = PiCamera()
-camera.resolution = (640, 480)
-camera.framerate = 50
-camera.hflip = True
+import cv2 as cv
 
-rawCapture = PiRGBArray(camera, size=(640, 480))
- 
+res = (320, 240)
+fps = 24
+
+# initialize the camera
+camera = PiCam(res, fps)
+
+camera.effects()
+camera.awbModes()
+camera.exposureModes()
+
+camera.videoCapture()
+colorspace = Colorspace('examples/color_detection/logs/blue2.log')
+
 # allow the camera to warmup
-time.sleep(0.1)
- 
+sleep(2.0)
+
 # capture frames from the camera
-for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True):
-	# grab the raw NumPy array representing the image, then initialize the timestamp
-	# and occupied/unoccupied text
-        image = frame.array
+while True:
+	frame = camera.current_frame
+	print(type(frame))
+	frame_blur = cv.GaussianBlur(frame, (9, 9), 150)                # smoothes the noise
+	frame_hsv = cv.cvtColor(frame_blur, cv.COLOR_BGR2HSV)   	# convert BGR to HSV
 
-        blur = cv2.blur(image, (3,3))
+	boxes = colorspace.getMaskBoxes(frame, frame_hsv, 150)  # get boxes (x, y, w, h)
 
-        #hsv to complicate things, or stick with BGR
-        #hsv = cv2.cvtColor(blur,cv2.COLOR_BGR2HSV)
-        #thresh = cv2.inRange(hsv,np.array((0, 200, 200)), np.array((20, 255, 255)))
+	offsets = cv_tools.getBoxesOffset(frame, boxes)                 # get boxes offset from the center of the frame
+	#for i, offset in enumerate(offsets):
+	#	print(i, offset)                                    # print offset (x_off, y_off)
 
-        lower = np.array([76,31,4],dtype="uint8")
-        #upper = np.array([225,88,50], dtype="uint8")
-        upper = np.array([210,90,70], dtype="uint8")
+	frame_out = cv_tools.drawBoxes(frame.copy(), boxes)     # draw boxe
+	frame_out = cv_tools.drawBoxesPos(frame_out, boxes)     # draw offsets
 
-        thresh = cv2.inRange(blur, lower, upper)
-        thresh2 = thresh.copy()
+	frame_grid = cv_tools.grid(frame, (2, 3),[              # generate grid
+		frame_hsv, frame_out, colorspace.im_contours,
+		colorspace.im_cut, colorspace.im_mask, colorspace.im_edges], 1)
 
-        # find contours in the threshold image
-        image, contours,hierarchy = cv2.findContours(thresh,cv2.RETR_LIST,cv2.CHAIN_APPROX_SIMPLE)
+	cv.imshow('grid', frame_grid)                           # show grid
 
-        # finding contour with maximum area and store it as best_cnt
-        max_area = 0
-        best_cnt = 1
-        for cnt in contours:
-                area = cv2.contourArea(cnt)
-                if area > max_area:
-                        max_area = area
-                        best_cnt = cnt
+	if cv.waitKey(1) & 0xFF == ord("q"):
+		break
 
-        # finding centroids of best_cnt and draw a circle there
-        M = cv2.moments(best_cnt)
-        cx,cy = int(M['m10']/M['m00']), int(M['m01']/M['m00'])
-        #if best_cnt>1:
-        cv2.circle(blur,(cx,cy),10,(0,0,255),-1)
-        # show the frame
-        cv2.imshow("Frame", blur)
-        #cv2.imshow('thresh',thresh2)
-        key = cv2.waitKey(1) & 0xFF
- 
-	# clear the stream in preparation for the next frame
-        rawCapture.truncate(0)
- 
-	# if the `q` key was pressed, break from the loop
-        if key == ord("q"):
-        	break
+camera.release()
+cv.destroyAllWindows()
