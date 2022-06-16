@@ -43,27 +43,15 @@ def main(red_lower, red_upper):
         # BGR(RGB color space) to
         # HSV(hue-saturation-value)
         # color space
-        hsvFrame = cv2.cvtColor(imageFrame, cv2.COLOR_BGR2HSV)
+        blurFrame = cv2.medianBlur(imageFrame,5)
+    
+        hsvFrame = cv2.cvtColor(blurFrame, cv2.COLOR_BGR2HSV)
+        # Defining the range of red color
+        lower = np.array([46,60,87])
+        upper = np.array([80,173,255])
+        
+        mask = cv2.inRange(hsvFrame, lower, upper)
 
-        # Set range for red color and
-        # define mask
-        #red_lower = np.array([136, 87, 111], np.uint8)
-        #red_upper = np.array([180, 255, 255], np.uint8)
-        lower_red = np.array([100, 100, 100])
-        upper_red = np.array([120, 255, 255])
-        mask0 = cv2.inRange(hsvFrame, lower_red, upper_red)
-
-        # upper mask (170-180)
-        lower_red = np.array([100,150,0])
-        upper_red = np.array([140,255,255])
-        mask1 = cv2.inRange(hsvFrame, lower_red, upper_red)
- 
-        full_mask = mask0 + mask1
-        kernel = np.ones((7,7),np.uint8)
-# Remove unnecessary noise from mask
-        mask = cv2.morphologyEx(full_mask, cv2.MORPH_CLOSE, kernel)
-        mask = cv2.morphologyEx(mask, cv2.MORPH_OPEN, kernel)
-        mask = cv2.Canny(mask, 100, 200)
 
         contours, hierarchy = cv2.findContours(mask.copy(),
                                             cv2.RETR_EXTERNAL,
