@@ -26,7 +26,7 @@ def archivo(line):
 
 def main(red_lower, red_upper):
     # Capturing video through webcam
-    webcam = cv2.VideoCapture(1)
+    webcam = cv2.VideoCapture(0)
     webcam.set(3,640)
     webcam.set(4,480)
     estado = "Sin objeto"
