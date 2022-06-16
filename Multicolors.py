@@ -67,7 +67,7 @@ def main(red_lower, red_upper):
         for pic, contour in enumerate(contours):
             x_mark=1
             area = cv2.contourArea(contour)
-            if(area > 250):
+            if(area > 25):
                 estado = "siguiendo"
                 x, y, w, h = cv2.boundingRect(contour)
                 imageFrame = cv2.rectangle(imageFrame, (x, y),
@@ -98,7 +98,7 @@ def main(red_lower, red_upper):
 
         cv2.putText(imageFrame, "Estado : {}".format(estado), (10, 450),
                     cv2.FONT_HERSHEY_SIMPLEX, 1.0, (0, 0, 255))
-        cv2.imshow("Proyecto final", mask)
+        cv2.imshow("Proyecto final", imageFrame)
         #cv2.imshow("Proyecto final", red_mask)
         if cv2.waitKey(10) & 0xFF == ord('q'):
             webcam.release()
