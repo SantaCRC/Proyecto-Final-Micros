@@ -1,0 +1,8 @@
+MOVER 32 40
+reposo 
+DISPARAR
+cardinal oeste
+pausa 10
+vertical
+moverx 7
+movery 20
