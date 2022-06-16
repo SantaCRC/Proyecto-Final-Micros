@@ -36,7 +36,7 @@ cv2.createTrackbar('high S','controls',255,255,callback)
 
 cv2.createTrackbar('low V','controls',0,255,callback)
 cv2.createTrackbar('high V','controls',255,255,callback)
-cam = cv2.VideoCapture(1)
+cam = cv2.VideoCapture(0)
 ret, img = cam.read()
 
 while(1):
