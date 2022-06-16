@@ -71,7 +71,7 @@ def mover(instruccion): #definicion de la funcion mover
         y = instruccion[2] #el tercero es el y
         print("Muevo a la posicion: " + str(x) + "," + str(y))
         pos = [x,y]
-        threading.Thread(target=servos.main, args=(pos)).start()
+        threading.Thread(target=servos.main, args=(pos,)).start()
     except Exception as e:
         print("Error: " + str(e))
         
