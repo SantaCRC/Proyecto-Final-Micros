@@ -47,8 +47,8 @@ def main(red_lower, red_upper):
     
         hsvFrame = cv2.cvtColor(blurFrame, cv2.COLOR_BGR2HSV)
         # Defining the range of red color
-        lower = np.array([46,60,87])
-        upper = np.array([80,173,255])
+        lower = np.array([0,103,110])
+        upper = np.array([179,245,255])
         
         mask = cv2.inRange(hsvFrame, lower, upper)
 
