@@ -3,11 +3,12 @@ import numpy as np
 import PySimpleGUI as sg
 import programa
 import threading
+import watchdog
 
 def call_blue():
     red_lower = np.array([0, 136, 0], np.uint8)
     red_upper = np.array([165, 255, 255], np.uint8)
-    Multicolor.main(red_lower,red_upper)
+    watchdog.main()
     
     
 
