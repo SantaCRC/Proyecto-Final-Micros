@@ -54,7 +54,7 @@ def main(red_lower, red_upper):
 
 
         contours, hierarchy = cv2.findContours(mask.copy(),
-                                            cv2.RETR_EXTERNAL,
+                                            cv2.RETR_LIST,
                                             cv2.CHAIN_APPROX_SIMPLE)
         
         #cv2.circle(imageFrame, (320, 240), 25, (0, 0, 255), 2)
