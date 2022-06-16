@@ -4,19 +4,24 @@ cam=cv2.VideoCapture(0)
 while (1):
     #original image---BGR
     
-    ret,img=cam.read()
-    cv2.imshow('Output',img)
-    #gray image
-    img1=cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
-    cv2.imshow('grayscale',img1)
-    #threshholded image
-    img2=cv2.inRange(img,cv2.Scalar(3,3,130),cv2.Scalar(50,50,255))
-    cv2.imshow('threshoalded',img2)
+    img = cam.read()
 
+    ## mask of red color
+    mask1 = cv2.inRange(img, (0, 0, 50), (50, 50,255))
 
-    key=cv2.waitKey(200)
-    if key==32:
-        break
+    ## mask of blue color
+    mask2 = cv2.inRange(img, (50,0,0), (255, 50, 50))
+
+    ## final mask
+    mask = cv2.bitwise_or(mask1, mask2)
+    target = cv2.bitwise_and(img,img, mask=mask)
+
+    cv2.imshow('Original Image',img)
+    cv2.imshow('mask red color',mask1)
+    cv2.imshow('mask blue color',mask2)
+    cv2.imshow('mask of both colors',mask)
+    cv2.imshow('target colors extracted',target)
+    cv2.waitKey(0)
 
 cam.release()
 cv2.destroyAllWindows()
