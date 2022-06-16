@@ -1,5 +1,7 @@
 import cv2
 import color_tracker
+import threading
+import servos
 
 
 def tracker_callback(t: color_tracker.ColorTracker):
@@ -8,6 +10,7 @@ def tracker_callback(t: color_tracker.ColorTracker):
         print(tracker.tracked_objects[0].last_point)
         cv2.putText(t.debug_frame, str(tracker.tracked_objects[0].last_point), (10, 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2)
         cv2.putText(t.debug_frame, "Siguiendo", (10, 200), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2)
+        threading.Thread(target=servos.main,args=(tracker.tracked_objects[0].last_point,)).start()
     except:
         cv2.putText(t.debug_frame, "No hay objetos", (10, 200), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2)
         pass
