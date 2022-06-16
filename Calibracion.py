@@ -54,7 +54,7 @@ def main():
     global image_hsv, pixel
 
     #OPEN DIALOG FOR READING THE IMAGE FILE
-    cam = cv2.VideoCapture(1)
+    cam = cv2.VideoCapture(0)
     ret, frame = cam.read()
     cv2.imshow("BGR",frame)
 
