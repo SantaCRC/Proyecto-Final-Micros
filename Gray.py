@@ -1,27 +1,15 @@
 import cv2
-import numpy as np
-cam=cv2.VideoCapture(0)
-while (1):
-    #original image---BGR
-    
-    frame,img = cam.read()
+import color_tracker
 
-    ## mask of red color
-    mask1 = cv2.inRange(img, (0, 0, 50), (50, 50,255))
 
-    ## mask of blue color
-    mask2 = cv2.inRange(img, (50,0,0), (255, 50, 50))
+def tracker_callback(t: color_tracker.ColorTracker):
+    cv2.imshow("debug", t.debug_frame)
+    cv2.waitKey(1)
 
-    ## final mask
-    mask = cv2.bitwise_or(mask1, mask2)
-    target = cv2.bitwise_and(img,img, mask=mask)
 
-    cv2.imshow('Original Image',img)
-    cv2.imshow('mask red color',mask1)
-    cv2.imshow('mask blue color',mask2)
-    cv2.imshow('mask of both colors',mask)
-    cv2.imshow('target colors extracted',target)
-    cv2.waitKey(0)
+tracker = color_tracker.ColorTracker(max_nb_of_objects=1, max_nb_of_points=20, debug=True)
+tracker.set_tracking_callback(tracker_callback)
 
-cam.release()
-cv2.destroyAllWindows()
+with color_tracker.WebCamera() as cam:
+    # Define your custom Lower and Upper HSV values
+    tracker.track(cam, [155, 103, 82], [178, 255, 255], max_skipped_frames=24)
