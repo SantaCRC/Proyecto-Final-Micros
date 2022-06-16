@@ -4,7 +4,7 @@ cam=cv2.VideoCapture(0)
 while (1):
     #original image---BGR
     
-    img = cam.read()
+    frame,img = cam.read()
 
     ## mask of red color
     mask1 = cv2.inRange(img, (0, 0, 50), (50, 50,255))
