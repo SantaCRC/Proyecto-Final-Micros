@@ -54,7 +54,7 @@ def main(red_lower, red_upper):
         mask0 = cv2.inRange(hsvFrame, lower_red, upper_red)
 
         # upper mask (170-180)
-        lower_red = np.array([160,100,20])
+        lower_red = np.array([107,128,189])
         upper_red = np.array([179,255,255])
         mask1 = cv2.inRange(hsvFrame, lower_red, upper_red)
  
