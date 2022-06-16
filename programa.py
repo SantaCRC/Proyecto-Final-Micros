@@ -70,7 +70,7 @@ def mover(instruccion): #definicion de la funcion mover
         x = instruccion[1] #el segundo elemento es el x
         y = instruccion[2] #el tercero es el y
         print("Muevo a la posicion: " + str(x) + "," + str(y))
-        pos = [x,y]
+        pos = [int(x),int(y)]
         threading.Thread(target=servos.main, args=(pos,)).start()
     except Exception as e:
         print("Error: " + str(e))
