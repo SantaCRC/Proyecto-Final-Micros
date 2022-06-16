@@ -71,7 +71,7 @@ def main():
 
 
 def init():
-    cam = cv2.VideoCapture(1)
+    cam = cv2.VideoCapture(0)
     while True:
         ret, frame = cam.read()
         if not ret:
