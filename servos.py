@@ -6,8 +6,8 @@ pin9 = board.get_pin('d:9:s')
 pin10 = board.get_pin('d:10:s')
 
 def main(posicion):
-    x=posicion[0]/10
-    y=posicion[1]/10
+    x=posicion[0]
+    y=posicion[1]
     pin9.write(x)
     pin10.write(y)
 
