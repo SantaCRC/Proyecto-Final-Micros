@@ -27,8 +27,8 @@ def archivo(line):
 def main(red_lower, red_upper):
     # Capturing video through webcam
     webcam = cv2.VideoCapture(0)
-    webcam.set(3,640)
-    webcam.set(4,480)
+    webcam.set(3,320)
+    webcam.set(4,240)
     estado = "Sin objeto"
 
     # Start a while loop
