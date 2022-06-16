@@ -10,7 +10,7 @@ while (1):
     img1=cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
     cv2.imshow('grayscale',img1)
     #threshholded image
-    img2=cv2.inRange(img,cv2.cv.Scalar(3,3,130),cv2.cv.Scalar(50,50,255))
+    img2=cv2.inRange(img,cv2.Scalar(3,3,130),cv2.Scalar(50,50,255))
     cv2.imshow('threshoalded',img2)
 
 
