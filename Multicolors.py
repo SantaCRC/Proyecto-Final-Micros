@@ -67,7 +67,7 @@ def main(red_lower, red_upper):
         for pic, contour in enumerate(contours):
             x_mark=1
             area = cv2.contourArea(contour)
-            if(area > 25):
+            if(area > 0):
                 estado = "siguiendo"
                 x, y, w, h = cv2.boundingRect(contour)
                 imageFrame = cv2.rectangle(imageFrame, (x, y),
