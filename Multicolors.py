@@ -63,6 +63,7 @@ def main(red_lower, red_upper):
 # Remove unnecessary noise from mask
         mask = cv2.morphologyEx(full_mask, cv2.MORPH_CLOSE, kernel)
         mask = cv2.morphologyEx(mask, cv2.MORPH_OPEN, kernel)
+        mask = cv2.Canny(mask, 100, 200)
 
         contours, hierarchy = cv2.findContours(mask.copy(),
                                             cv2.RETR_EXTERNAL,
