@@ -37,6 +37,7 @@ def main(red_lower, red_upper):
         # Reading the video from the
         # webcam in image frames
         _, imageFrame = webcam.read()
+        imageFrame = cv.GaussianBlur(imageFrame, (9, 9), 150)
 
         # Convert the imageFrame in
         # BGR(RGB color space) to
