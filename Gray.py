@@ -5,7 +5,10 @@ import color_tracker
 def tracker_callback(t: color_tracker.ColorTracker):
     cv2.imshow("debug", t.debug_frame)
     cv2.waitKey(1)
-    print(tracker.tracked_objects[0].last_point)
+    try:
+        print(tracker.tracked_objects[0].last_point)
+    except IndexError:
+        pass
 
 
 tracker = color_tracker.ColorTracker(max_nb_of_objects=1, max_nb_of_points=20, debug=True)
