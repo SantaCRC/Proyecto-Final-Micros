@@ -98,7 +98,7 @@ def main(red_lower, red_upper):
 
         cv2.putText(imageFrame, "Estado : {}".format(estado), (10, 450),
                     cv2.FONT_HERSHEY_SIMPLEX, 1.0, (0, 0, 255))
-        cv2.imshow("Proyecto final", imageFrame)
+        cv2.imshow("Proyecto final", mask)
         #cv2.imshow("Proyecto final", red_mask)
         if cv2.waitKey(10) & 0xFF == ord('q'):
             webcam.release()
