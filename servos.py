@@ -1,7 +1,7 @@
 import pyfirmata
 import threading
 import time
-board = pyfirmata.Arduino('COM7')
+board = pyfirmata.Arduino('/dev/ttyACM0')
 iter8 = pyfirmata.util.Iterator(board)
 iter8.start()
 pin9 = board.get_pin('d:9:s')
