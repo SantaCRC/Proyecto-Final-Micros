@@ -5,12 +5,16 @@ import programa
 import threading
 import watchdog
 
+#Define color en azul
 def call_blue():
-    red_lower = np.array([0, 136, 0], np.uint8)
-    red_upper = np.array([165, 255, 255], np.uint8)
-    watchdog.main()
-    
-    
+    watchdog.main([100,150,0],[140,255,255]) #llama al watchdog
+
+#define color en rojo
+def call_red():
+    watchdog.main([155, 103, 82],[178, 255, 255]) #llama al watchdog
+#Define color en verde
+def call_green():
+    watchdog.main([80, 140, 110],[90, 160, 125]) #llama al watchdog
 
         
     
@@ -50,7 +54,11 @@ def menu_watchdog():
         if event == "Exit" or event == sg.WIN_CLOSED:
             break
         elif event == "red":
+            call_red()
+        elif event == "blue":
             call_blue()
+        elif event == "green":
+            call_green()
 
         
     window.close()
