@@ -1,6 +1,6 @@
 import time
 import threading
-import servos
+import servos1 as servos
 
 def movery(instruccion):
     try:

@@ -1,7 +1,7 @@
 import cv2
 import color_tracker
 import threading
-import servos
+import servos1 as servos
 #import keyboard
 def isInside(circle_x, circle_y, rad, x, y):
      # funcion que determina si un punto esta dentro de un circulo
