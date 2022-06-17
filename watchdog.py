@@ -2,7 +2,7 @@ import cv2
 import color_tracker
 import threading
 import servos
-import keyboard
+#import keyboard
 def isInside(circle_x, circle_y, rad, x, y):
      # funcion que determina si un punto esta dentro de un circulo
     if ((x - circle_x) * (x - circle_x) +
@@ -27,8 +27,8 @@ def tracker_callback(t: color_tracker.ColorTracker):
     cv2.circle(t.debug_frame, (320,240), 75, (255, 255, 255), 2)
     cv2.imshow("debug", t.debug_frame)
     cv2.waitKey(1)
-    if keyboard.is_pressed('q'):
-        cv2.destroyAllWindows() # cierra todas las ventanas
+    #if keyboard.is_pressed('q'):
+        #cv2.destroyAllWindows() # cierra todas las ventanas
 
     
 
