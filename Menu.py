@@ -4,6 +4,10 @@ import PySimpleGUI as sg
 import programa
 import threading
 import watchdog
+import manual
+
+def call_manual():
+    manual.main()
 
 #Define color en azul
 def call_blue():
@@ -83,4 +87,8 @@ while True:
         menu_programado()
     elif event == "-WATCHDOG-":
         menu_watchdog()
+    elif event == 'salir':
+        break
+    elif event == '-MANUAL-':
+        call_manual()
 window.close()
