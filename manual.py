@@ -43,9 +43,9 @@ def leer():
 
 timer = int(120)
 def main():
-    leer()
-    board.servo_write(SERVO_PIN1, 90)
-    board.servo_write(SERVO_PIN2, 90)
+    #leer()
+    #board.servo_write(SERVO_PIN1, 90)
+    #board.servo_write(SERVO_PIN2, 90)
     timer = int(120)
     # define a video capture object
     vid = cv2.VideoCapture(0)
@@ -73,6 +73,6 @@ def main():
 
     # After the loop release the cap object
     vid.release()
-    board.shutdown()
+    #board.shutdown()
     # Destroy all the windows
     cv2.destroyAllWindows()
